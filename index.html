@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            TESTING | New "Multilayer" Map with leaflet Layer selector 
+            DRAFT | CAU Map with 3 leaflet Layer selectors
         </title>
  
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -22,16 +22,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <!-- <script src="../src/leaflet-panel-layers.js"></script>  new -->
 
-
-
-
-
-        <style type="text/css">
+  <style type="text/css">
             html, body, #map {
                 height: 100%;
                 padding: 0;
                 margin: 0;
             }
+
 
 /* leaflet style overrides */
 
@@ -57,7 +54,7 @@
       border-radius: 5px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-      padding: 6px 16px 6px 5px;   /*top, right, bottom, left */
+      padding: 30px 16px 6px 5px;   /* top, right, bottom, left */
       height: 120px;
       width: 165px;
       overflow: auto;    /* allows scrolling in selector */
@@ -85,10 +82,66 @@
        color: #74a9cf;
 }
 
-.layer-title {      /* testing */
-       font: 13px/2 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #000000;
-}
+
+
+
+
+    .layer_titles {
+        position: absolute;
+        text-align: right;
+       }
+
+      .title-group1 {
+        position: absolute;
+        top: 14px;
+        right: 18px;
+       }
+      .title-group2 {
+        position: absolute;
+        top: 178px;
+        right: 18px;        
+       }
+      .title-group3 {
+        position: absolute;
+        top: 345px;
+        right: 18px;        
+       }
+
+
+       .title {
+        position: relative;
+        font: 24px/1 'Open Sans';
+        font-weight: 900;
+        color: #000;
+       }
+
+
+.instructions {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+      background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+      font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
+      padding: 1px 12px 4px 4px;   /* top, right, bottom, left */
+      height: 47px;
+      width: 200px;
+      overflow: auto;    /* allows scrolling in selector */
+    }
+
+      .instruct_title {
+        font: 18px/1.8 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        color: #000;
+        font-weight: 900;
+       }
+
+      .instruct_text {
+        font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        color: #000;
+       }
+
+
 
 
 </style>
@@ -96,6 +149,24 @@
 
     <body>
         <div id="map"></div>
+
+        <div id="titles">
+            <div class="title-group1"> 
+                <p class="title">Boundaries</p>
+            </div>
+            <div class="title-group2"> 
+                <p class="title">Demographics</p>
+            </div>
+            <div class="title-group3"> 
+                <p class="title">CAU Layers</p>
+            </div>
+         </div>   
+        
+          <div class="instructions"> 
+                <p class="instruct_title">Layer order note:</p>
+                <p class="instruct_text">Layers are drawn as you select them, newest on top of oldest. To change the order, simply toggle a layer off and then on again to make it appear on "top".</p>
+            </div>
+
  
         <!-- include cartodb.js library -->
         <script src="http://libs.cartocdn.com/cartodb.js/v3/3.13/cartodb.js" type="text/javascript"></script> 
@@ -129,7 +200,6 @@
 // ***********************************************************************
 // Leaflet boundary overlays using cartodb.createLayer and .addTo() method
 
-
 var neighborhoods = cartodb.createLayer(map_object, {
                     user_name: 'andrewmartini',
                     type: 'cartodb',
@@ -137,7 +207,7 @@ var neighborhoods = cartodb.createLayer(map_object, {
                       sql: "SELECT * FROM neighborhoods",
                       cartocss: "#layer { polygon-fill: #000000; polygon-opacity: 0; line-color: #000000; line-width: 2; line-opacity: 1;}",
                       interactivity: "cartodb_id" }]
-                    })
+                    });
     var l_neighborhoods = new L.LayerGroup();
     neighborhoods.addTo(l_neighborhoods);
 
@@ -173,16 +243,13 @@ var nyss = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/ap
       var l_nyss = new L.LayerGroup();
       nyss.addTo(l_nyss); 
 
-
 var nyad = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/8aa5a57e-2a5e-11e5-9807-0e9d821ea90d/viz.json');
       var l_nyad = new L.LayerGroup();
       nyad.addTo(l_nyad); 
 
-
 var nycg = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/d0fb1b72-2a5d-11e5-a731-0e4fddd5de28/viz.json');
       var l_nycg = new L.LayerGroup();
       nycg.addTo(l_nycg); 
-
 
 var censustract = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/8e9dcb04-9821-11e4-a998-0e9d821ea90d/viz.json');
       var l_censustract = new L.LayerGroup();
@@ -222,132 +289,113 @@ var boundaries_group = {
                       "<span class='my-layer-item-blue'>DOE School Zones</span>": l_school_zone,
                       "<span class='my-layer-item-blue'>Police Precincts</span>": l_precincts
                     };
-
-                  
+   
   L.control.layers(null, boundaries_group, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
 
 
 
 
 
-// Leaflet boundary overlays using createLayer GROUP B
-                var layer1b;
-                var layer2b;
-                var layer3b;
-                var layer4b;
-                var layer5b;
-                var layer6b;
-                var layer7b;
-                var layer8b;
-                var layer9b;
+// ***********************************************************************
+// Leaflet boundary overlays using cartodb.createLayer and .addTo() method
 
-
-              cartodb.createLayer(map_object, {   //foreign born
+var foreign_born_choro = cartodb.createLayer(map_object, {   //foreign born
                     user_name: 'andrewmartini',
                     type: 'cartodb',
                     sublayers: [{
                       sql: "SELECT * FROM tracttemp",
                       cartocss: "#tracttemp  {  polygon-fill: #FFFFB2;  polygon-opacity: 0.8;   line-color: #FFF;  line-width: 0.5;  line-opacity: 1; } #tracttemp [ foreignbor <= 8512] {  polygon-fill: #BD0026; } #tracttemp [ foreignbor <= 2314] {   polygon-fill: #F03B20; } #tracttemp [ foreignbor <= 1596] {   polygon-fill: #FD8D3C; } #tracttemp [ foreignbor <= 1076] {   polygon-fill: #FECC5C; } #tracttemp [ foreignbor <= 649] {  polygon-fill: #FFFFB2; }",
                       interactivity: "cartodb_id" }] 
-                    })
-              .done(function(layer) {
-              layer1b = layer;
+                    });
+    var l_foreign_born_choro = new L.LayerGroup();
+    foreign_born_choro.addTo(l_foreign_born_choro);
 
-                cartodb.createLayer(map_object, 'https://ashron2224.cartodb.com/api/v2/viz/90b2c52e-2b11-11e5-bd2c-0e853d047bba/viz.json')
-                .done(function(layer) {
-                layer2b = layer; 
+var turkish_graduated = cartodb.createLayer(map_object, 'https://ashron2224.cartodb.com/api/v2/viz/90b2c52e-2b11-11e5-bd2c-0e853d047bba/viz.json');
+    var l_turkish_graduated = new L.LayerGroup();
+    turkish_graduated.addTo(l_turkish_graduated);
 
 
-                cartodb.createLayer(map_object, {  //black HH
+var black_hh_choro = cartodb.createLayer(map_object, {  //black HH
                     user_name: 'andrewmartini',
                     type: 'cartodb',
                     sublayers: [{
                       sql: "SELECT * FROM tracttemp",
                       cartocss: "#tracttemp {  polygon-fill: #FFFFB2;  polygon-opacity: 0.8; line-color: #FFF;  line-width: 0.5; line-opacity: 1; } #tracttemp [ blackhh <= 7344] { polygon-fill: #BD0026; } #tracttemp [ blackhh <= 1061] { polygon-fill: #F03B20;} #tracttemp [ blackhh <= 663] {  polygon-fill: #FD8D3C; } #tracttemp [ blackhh <= 405] {  polygon-fill: #FECC5C; } #tracttemp [ blackhh <= 174] {   polygon-fill: #FFFFB2; }",
                       interactivity: "cartodb_id"}]
-                  })
-                    .done(function(layer) {
-                      layer3b = layer;
+                  });
+    var l_black_hh_choro = new L.LayerGroup();
+    black_hh_choro.addTo(l_black_hh_choro);
 
-                      cartodb.createLayer(map_object, {   //median income
+var median_inc_choro = cartodb.createLayer(map_object, {   //median hh income
                         user_name: 'andrewmartini',
                         type: 'cartodb',
                         sublayers: [{
                           sql: "SELECT * FROM tracttemp",
                           cartocss: "#tracttemp { polygon-fill: #1a9850;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0.5;  line-opacity: 1; } #tracttemp [ medianhhin <= 243622] {  polygon-fill: #d73027; } #tracttemp [ medianhhin <= 84240] {  polygon-fill: #f79272; } #tracttemp [ medianhhin <= 67394] {   polygon-fill: #fed6b0; } #tracttemp [ medianhhin <= 57176] {  polygon-fill: #fff2cc; } #tracttemp [ medianhhin <= 48159] { polygon-fill: #d2ecb4; } #tracttemp [ medianhhin <= 39538] {   polygon-fill: #8cce8a; } #tracttemp [ medianhhin <= 30106] { polygon-fill: #1a9850; }",
                         interactivity: "cartodb_id"}]
-                      })
-                      .done(function(layer) {
-                        layer4b = layer;
+                      });
+    var l_median_inc_choro  = new L.LayerGroup();
+    median_inc_choro.addTo(l_median_inc_choro);
 
-                      cartodb.createLayer(map_object, {  //empl food serv
+var employ_foodserv_choro = cartodb.createLayer(map_object, {  //empl food serv
                       user_name: 'andrewmartini',
                       type: 'cartodb',
                       sublayers: [{
                         sql: "SELECT * FROM tracttemp",
                         cartocss: "#tracttemp {   polygon-fill: #EDF8FB;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ empfoodser <= 1326] {    polygon-fill: #005824; } #tracttemp [ empfoodser <= 448] {    polygon-fill: #238B45; } #tracttemp [ empfoodser <= 307] {    polygon-fill: #41AE76; } #tracttemp [ empfoodser <= 221] {    polygon-fill: #66C2A4; } #tracttemp [ empfoodser <= 160] {    polygon-fill: #CCECE6; } #tracttemp [ empfoodser <= 107] {    polygon-fill: #D7FAF4; } #tracttemp [ empfoodser <= 54] {    polygon-fill: #EDF8FB; }",
                       interactivity: "cartodb_id"}]
-                    })
-                      .done(function(layer) {
-                        layer5b = layer;
+                    });
+    var l_employ_foodserv_choro  = new L.LayerGroup();
+    employ_foodserv_choro.addTo(l_employ_foodserv_choro);
 
-                        cartodb.createLayer(map_object, {   //high school percent
+var high_school_choro_pct = cartodb.createLayer(map_object, {   //high school percent
                       user_name: 'andrewmartini',
                       type: 'cartodb',
                       sublayers: [{
                         sql: "SELECT highschool, popover24, the_geom, the_geom_webmercator,  ((highschool) *1.0 / popover24*1.0) *100 AS hs_percent FROM tracttemp WHERE popover24 > 50",
                         cartocss: "#tracttemp{   polygon-fill: #F1E6F1;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ hs_percent <= 56.8999345977763] {    polygon-fill: #8A4E8A; } #tracttemp [ hs_percent <= 34.3586767266396] {    polygon-fill: #A05AA0; } #tracttemp [ hs_percent <= 29.0862656072645] {    polygon-fill: #B379B3; } #tracttemp [ hs_percent <= 24.5728234336859] {    polygon-fill: #D8BBD8; } #tracttemp [ hs_percent <= 18.3518705763397] {    polygon-fill: #F1E6F1; }",
                       interactivity: "cartodb_id"}]
-                    })
-                          .done(function(layer) {
-                          layer6b = layer;
+                    });
+    var l_high_school_choro_pct  = new L.LayerGroup();
+    high_school_choro_pct.addTo(l_high_school_choro_pct);
 
-                        cartodb.createLayer(map_object, {   //high school
+var high_school_choro_num = cartodb.createLayer(map_object, {   //high school
                       user_name: 'andrewmartini',
                       type: 'cartodb',
                       sublayers: [{
                         sql: "SELECT * FROM tracttemp",
                         cartocss: "#tracttemp{   polygon-fill: #FFFFB2;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ highschool <= 6069] {    polygon-fill: #B10026; } #tracttemp [ highschool <= 1200] {    polygon-fill: #E31A1C; } #tracttemp [ highschool <= 932] {    polygon-fill: #FC4E2A; } #tracttemp [ highschool <= 744] {    polygon-fill: #FD8D3C; } #tracttemp [ highschool <= 572] {    polygon-fill: #FEB24C; } #tracttemp [ highschool <= 409] {    polygon-fill: #FED976; } #tracttemp [ highschool <= 239] {    polygon-fill: #FFFFB2; }",
                       interactivity: "cartodb_id"}]
-                    })
-                          .done(function(layer) {
-                          layer7b = layer;  
+                    });
+    var l_high_school_choro_num = new L.LayerGroup();
+    high_school_choro_num.addTo(l_high_school_choro_num); 
 
-                            cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/8e9dcb04-9821-11e4-a998-0e9d821ea90d/viz.json')
-                            .done(function(layer) {
-                            layer8b = layer;
+var muslim_lang_choro = cartodb.createLayer(map_object, {   // kids speaking potential muslim languages
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM schlang_merge_04_30",
+                        cartocss: "#schlang_merge_04_30 { polygon-fill: #EDF8FB; polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0.5;  line-opacity: 1; } #schlang_merge_04_30 [ _mus4_pct <= 0.49] {  polygon-fill: #005824; } #schlang_merge_04_30 [ _mus4_pct <= 0.29] {  polygon-fill: #238B45; } #schlang_merge_04_30 [ _mus4_pct <= 0.22] {  polygon-fill: #41AE76; } #schlang_merge_04_30 [ _mus4_pct <= 0.17] {  polygon-fill: #66C2A4; } #schlang_merge_04_30 [ _mus4_pct <= 0.12] {  polygon-fill: #CCECE6; } #schlang_merge_04_30 [ _mus4_pct <= 0.08] {  polygon-fill: #D7FAF4; } #schlang_merge_04_30 [ _mus4_pct <= 0.04] { polygon-fill: #EDF8FB; }",
+                      interactivity: "cartodb_id"}]
+                    });
+    var l_muslim_lang_choro = new L.LayerGroup();
+    muslim_lang_choro.addTo(l_muslim_lang_choro); 
 
-                              cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/0546aec0-2a7f-11e5-9807-0e9d821ea90d/viz.json')
-                              .done(function(layer) {
-                              layer9b = layer;
+
                             
-                    var demographics = {
-                      "Number Foreign Born": layer1b,
-                      "Turkish":layer2b, 
-                      "Black Households": layer3b,
-                      "Median HH Income": layer4b,
-                      "Empl. Food Service": layer5b,
-                      "<span class='my-layer-item-red'>Pct High School</span>": layer6b,
-                      "Num High School": layer7b,
-                      "xUS Census Tracts": layer8b,
-                      "xDOE School Zones": layer9b
-                    };
+              var demographics = {
+                      "Number Foreign Born": l_foreign_born_choro,
+                      "Turkish":l_turkish_graduated, 
+                      "Black Households": l_black_hh_choro,
+                      "Median HH Income": l_employ_foodserv_choro,
+                      "Empl. Food Service": l_employ_foodserv_choro,
+                      "<span class='my-layer-item-red'>Pct High School</span>": l_high_school_choro_pct,
+                      "Num High School": l_high_school_choro_num,
+                      "Muslim School Lang": l_muslim_lang_choro
+                };
 
-                   L.control.layers(null, demographics, {collapsed: false, position:'topright', autoZIndex:false}).addTo(map_object);
-                   //.setZIndex(100);
-                 //  L.Control.CategorizedLayers(null, demographics, {collapsed: false, position:'topright'}).addTo(map_object);
+                L.control.layers(null, demographics, {collapsed: false, position:'topright', autoZIndex:false}).addTo(map_object);
                
-
-                            });  //9
-                          });  //8
-                        });  //7
-                      });  //6
-                    });  //5
-                  });  //4
-                });  //3
-              });  //2
-            });  //1 
-
 
 
 
