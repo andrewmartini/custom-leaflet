@@ -10,15 +10,19 @@
  
         <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
  
-      <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7/leaflet.css"/> 
+        <!-- <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7/leaflet.css"/> -->
  
+        <!-- <link rel="stylesheet" href="../src/leaflet-panel-layers.css" />    new -->
 
         <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" type="text/css" /> 
  
 
 
-  <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script> 
+    <!-- <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script> -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <!-- <script src="../src/leaflet-panel-layers.js"></script>  new -->
+
+
 
 
 
@@ -429,9 +433,15 @@
     };
 
      L.control.layers(null, caugroup, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
+     //.setZIndex(600);
+   // L.Control.CategorizedLayers(null, overlayLayers, {collapsed: false, position:'topright'}).addTo(map_object);
+
+
 
 
             }
+
+
 
         </script>
     </body>
