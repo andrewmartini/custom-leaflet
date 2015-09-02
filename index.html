@@ -198,7 +198,7 @@
 
 
 // ***********************************************************************
-// Leaflet boundary overlays using cartodb.createLayer and .addTo() method
+// Leaflet BOUNDARY overlays using cartodb.createLayer and .addTo() method
 
 var neighborhoods = cartodb.createLayer(map_object, {
                     user_name: 'andrewmartini',
@@ -297,7 +297,7 @@ var boundaries_group = {
 
 
 // ***********************************************************************
-// Leaflet boundary overlays using cartodb.createLayer and .addTo() method
+// Leaflet DEMOGRAPHIC overlays using cartodb.createLayer and .addTo() method
 
 var foreign_born_choro = cartodb.createLayer(map_object, {   //foreign born
                     user_name: 'andrewmartini',
@@ -381,17 +381,53 @@ var muslim_lang_choro = cartodb.createLayer(map_object, {   // kids speaking pot
     var l_muslim_lang_choro = new L.LayerGroup();
     muslim_lang_choro.addTo(l_muslim_lang_choro); 
 
+var single_mom_choro = cartodb.createLayer(map_object, {   // single mom HH's
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   polygon-fill: #ECF0F6;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0;   line-opacity: 1; } #tracttemp [ singlemom <= 2279] {    polygon-fill: #43618F; } #tracttemp [ singlemom <= 738] {    polygon-fill: #4E71A6; } #tracttemp [ singlemom <= 563] {    polygon-fill: #6182B5; } #tracttemp [ singlemom <= 417] {    polygon-fill: #849EC5; } #tracttemp [ singlemom <= 304] {    polygon-fill: #9BB0D0; } #tracttemp [ singlemom <= 200] {    polygon-fill: #B2C2DB; } #tracttemp [ singlemom <= 102] {    polygon-fill: #ECF0F6; }",
+                      interactivity: "cartodb_id"}]
+                    });
+    var l_single_mom_choro = new L.LayerGroup();
+    single_mom_choro.addTo(l_single_mom_choro); 
 
-                            
+
+var hispanic2_choro = cartodb.createLayer(map_object, {   // Hispanic HH's
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   polygon-fill: #FFFFB2;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0;   line-opacity: 1; } #tracttemp [ hispanic2 <= 13784] {    polygon-fill: #B10026; } #tracttemp [ hispanic2 <= 2977] {    polygon-fill: #E31A1C; } #tracttemp [ hispanic2 <= 1781] {    polygon-fill: #FC4E2A; } #tracttemp [ hispanic2 <= 1064] {    polygon-fill: #FD8D3C; } #tracttemp [ hispanic2 <= 735] {    polygon-fill: #FEB24C; } #tracttemp [ hispanic2 <= 457] {    polygon-fill: #FED976; } #tracttemp [ hispanic2 <= 224] {    polygon-fill: #FFFFB2; }",
+                      interactivity: "cartodb_id"}]
+                    });
+    var l_hispanic2_choro = new L.LayerGroup();
+    hispanic2_choro.addTo(l_hispanic2_choro); 
+
+
+var haitian_graduated = cartodb.createLayer(map_object, {   // Haitian descent? or immigrants?
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   marker-fill-opacity: 0.5;   marker-line-color: #FF2900;   marker-line-width: 0.5;   marker-line-opacity: 1;   marker-placement: point;   marker-multi-policy: largest;   marker-type: ellipse;   marker-fill: #FF5C00;   marker-allow-overlap: true;   marker-clip: false; } #tracttemp [ haitian <= 1539] {    marker-width: 20.0; } #tracttemp [ haitian <= 666] {    marker-width: 18.3; } #tracttemp [ haitian <= 490] {    marker-width: 16.7; } #tracttemp [ haitian <= 337] {    marker-width: 15.0; } #tracttemp [ haitian <= 257] {    marker-width: 13.3; } #tracttemp [ haitian <= 188] {    marker-width: 11.7; } #tracttemp [ haitian <= 137] {    marker-width: 10.0; } #tracttemp [ haitian <= 95] {    marker-width: 8.3; } #tracttemp [ haitian <= 61] {    marker-width: 6.7; } #tracttemp [ haitian <= 30] {    marker-width: 0.0; }",
+                      interactivity: "cartodb_id"}]
+                    });
+    var l_haitian_graduated = new L.LayerGroup();
+    haitian_graduated.addTo(l_haitian_graduated);     
+                  
               var demographics = {
                       "Number Foreign Born": l_foreign_born_choro,
-                      "Turkish":l_turkish_graduated, 
+                      "Turkish": l_turkish_graduated, 
+                      "Haitian": l_haitian_graduated,
                       "Black Households": l_black_hh_choro,
+                      "Hispanic Households": l_hispanic2_choro,
                       "Median HH Income": l_employ_foodserv_choro,
                       "Empl. Food Service": l_employ_foodserv_choro,
                       "<span class='my-layer-item-red'>Pct High School</span>": l_high_school_choro_pct,
                       "Num High School": l_high_school_choro_num,
-                      "Muslim School Lang": l_muslim_lang_choro
+                      "Muslim School Lang": l_muslim_lang_choro,
+                      "Single Mom HH's": l_single_mom_choro
                 };
 
                 L.control.layers(null, demographics, {collapsed: false, position:'topright', autoZIndex:false}).addTo(map_object);
