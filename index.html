@@ -19,7 +19,8 @@
 
 
     <!-- <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script> -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script> -->
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
     <!-- <script src="../src/leaflet-panel-layers.js"></script>  new -->
 
   <style type="text/css">
@@ -30,6 +31,18 @@
             }
 
 /* leaflet style overrides */
+
+
+
+.leaflet-control-layers-toggle{ 
+    width:auto;
+    background-position:3px 50% ;
+    padding:3px;
+    padding-left:36px;
+    text-decoration:none;
+    line-height:36px;
+
+}
 
     .leaflet-right .leaflet-control {
       float: right;
@@ -82,38 +95,6 @@
 
 
 
-
-
-    .layer_titles {
-        position: absolute;
-        text-align: right;
-       }
-
-      .title-group1 {
-        position: absolute;
-        top: 14px;
-        right: 18px;
-       }
-      .title-group2 {
-        position: absolute;
-        top: 178px;
-        right: 18px;        
-       }
-      .title-group3 {
-        position: absolute;
-        top: 345px;
-        right: 18px;        
-       }
-
-
-       .title {
-        position: relative;
-        font: 24px/1 'Open Sans';
-        font-weight: 900;
-        color: #000;
-       }
-
-
 .instructions {
         position: absolute;
         top: 10px;
@@ -141,19 +122,128 @@
         padding: 5px 1px 4px 4px;
        }
 
+/* change the appearance of the leaflet zoom control, copied from http://wcfcourier.com/app/special/fatalcrashes/css/styles.css */
+.leaflet-control-zoom a {
+    background-color: #333;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.leaflet-bar a:hover {
+    background-color: #000;
+}
+
+.leaflet-control-zoom a:hover {
+    background-color: #000;
+    color: #CCC;
+    text-decoration: none;
+}
+
+.leaflet-control-zoom a.leaflet-disabled {
+    background-color: #999;
+  color: #BBB;
+}
+
+.leaflet-control-zoom a.leaflet-disabled:hover {
+    color: #BBB;
+}
+
+
+/* "Legend"  */
+#legend, #hide_show_legend {
+  background-color: #333;
+  border-radius: 5px;
+  left: 50px;
+  position: absolute;
+  z-index: 8;
+  top: 10px;
+  color: #FFF;
+  font: 13px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+#legend {
+  width: 25%;
+  max-width: 250px;
+  z-index: 7;
+  padding: 0 10px 0 10px;
+  border: 1px solid #FFF;
+}
+#legend h1 {
+  width: 25%;
+  max-width: 250px;
+  z-index: 7;
+  padding: 1px 0 0 50px;
+  border: none;
+}
+
+#legend p {
+  font-size: 13px;
+  margin: 0px;
+  line-height: 17px;
+  padding-bottom: 5px;
+  clear: both;
+}
+
+
+/* Hide, show legend buttons */
+#hide_show_legend {
+  height: 20px;
+  z-index: 8;
+  padding: 5px 0 0 5px;
+  margin: 5px 0 0 5px;
+          font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        color: #ccc;
+        border: 1px solid #4D4D4D;
+}
+
+
+.icon-sort-up, .icon-sort-down, .hide_show_legend_text {
+  float: right;
+  padding-right: 5px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.icon-sort-up {
+  padding-top: 5px;
+}
+
+.icon-sort-down {
+  padding-bottom: 5px;
+}
 
 
 </style>
+
+
     </head>
 
     <body>
         <div id="map"></div>
 
-        
-          <div class="instructions"> 
-                <p class="instruct_title">To control layer order:</p><hr>
-                <p class="instruct_text">Layers are drawn as you select them, newest on top of oldest. To change the order, simply toggle a layer off and then on again to make it appear on top of others.</p>
-            </div>
+<!-- code for "legend" stolen from  http://wcfcourier.com/app/special/fatalcrashes/ --> 
+  <div id="hide_show_legend">
+    <div class="hide_legend">
+      <!-- <div class="icon-sort-up"></div> -->
+      <div class="hide_show_legend_text"> Show </div>
+    </div>
+    <div class="show_legend" style="display: none;">
+      <!-- <div class="icon-sort-down"></div> -->
+      <div class="hide_show_legend_text"> Hide </div>
+    </div>
+  </div>
+
+  <div id="legend" class="box-shadow">
+      <h1>Instructions</h1>
+
+      <div id="legend-text-intro">
+        <p><hr>Layers are drawn as you select them, newest on top of oldest. To change the order, simply toggle a layer off and then on again to make it appear on top of others.</p>
+      </div>
 
  
         <!-- include cartodb.js library -->
@@ -163,7 +253,29 @@
         <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
         <![endif]-->
  
- 
+ <script>
+// Toggle for show, hide legend
+// Only visible on desktop
+isHideButton = true;
+$('#hide_show_legend').click(function() {
+  // console.log(isHideButton);
+  if (isHideButton === true) {
+    $('.hide_legend').hide();
+    $('.show_legend').show();
+    $('#legend').slideUp();
+    $('#hide_show_legend').addClass('box-shadow');
+    $('.hide_show_legend').show();
+    isHideButton = false;
+  } else {
+    $('.show_legend').hide();
+    $('.hide_legend').show();
+    $('#legend').slideDown();
+    $('#hide_show_legend').removeClass('box-shadow');
+    $('.hide_show_legend').show();
+    isHideButton = true;
+  }
+});
+</script>
 
         <script type="text/javascript">
             window.onload = function () {
@@ -217,7 +329,7 @@ var nycc = cartodb.createLayer(map_object, {
                     type: 'cartodb',
                     sublayers: [{
                       sql: "SELECT * FROM nycc",
-                      cartocss: "#layer{ polygon-fill: #000000; polygon-opacity: 0; line-color: #000000; line-width: 3; line-opacity: 1; }",
+                      cartocss: "#layer{ polygon-fill: #000000; polygon-opacity: 0; line-color: #000000; line-width: 3; line-opacity: 1; } #nycc::labels [zoom >12]{   text-name: [coundist];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
                       interactivity: "cartodb_id"}]
                   });
       var l_nycc = new L.LayerGroup();
