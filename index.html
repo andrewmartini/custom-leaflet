@@ -29,9 +29,7 @@
                 margin: 0;
             }
 
-
 /* leaflet style overrides */
-
 
     .leaflet-right .leaflet-control {
       float: right;
@@ -54,7 +52,7 @@
       border-radius: 5px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-      padding: 30px 16px 6px 5px;   /* top, right, bottom, left */
+      padding: 10px 16px 6px 5px;   /* top, right, bottom, left */
       height: 120px;
       width: 165px;
       overflow: auto;    /* allows scrolling in selector */
@@ -120,27 +118,28 @@
         position: absolute;
         top: 10px;
         left: 50px;
-      background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
-      border-radius: 5px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
-      font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
-      padding: 1px 12px 4px 4px;   /* top, right, bottom, left */
-      height: 47px;
-      width: 200px;
-      overflow: auto;    /* allows scrolling in selector */
+        background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
+        border-radius: 5px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+        font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        padding: 1px 12px 4px 4px;   /* top, right, bottom, left */
+        height: 80px;
+        width: 230px;
+        overflow: auto;    /* allows scrolling in selector */
     }
 
       .instruct_title {
         font: 18px/1.8 "Helvetica Neue", Arial, Helvetica, sans-serif;
         color: #000;
         font-weight: 900;
+        padding: 0 12px 1px 4px;
        }
 
       .instruct_text {
         font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
         color: #000;
+        padding: 5px 1px 4px 4px;
        }
-
 
 
 
@@ -150,21 +149,10 @@
     <body>
         <div id="map"></div>
 
-        <div id="titles">
-            <div class="title-group1"> 
-                <p class="title">Boundaries</p>
-            </div>
-            <div class="title-group2"> 
-                <p class="title">Demographics</p>
-            </div>
-            <div class="title-group3"> 
-                <p class="title">CAU Layers</p>
-            </div>
-         </div>   
         
           <div class="instructions"> 
-                <p class="instruct_title">Layer order note:</p>
-                <p class="instruct_text">Layers are drawn as you select them, newest on top of oldest. To change the order, simply toggle a layer off and then on again to make it appear on "top".</p>
+                <p class="instruct_title">To control layer order:</p><hr>
+                <p class="instruct_text">Layers are drawn as you select them, newest on top of oldest. To change the order, simply toggle a layer off and then on again to make it appear on top of others.</p>
             </div>
 
  
@@ -269,14 +257,35 @@ var nybb = cartodb.createLayer(map_object, {
                         });
       var l_nybb = new L.LayerGroup();
       nybb.addTo(l_nybb); 
-                            
+                          
+ var zipcode = cartodb.createLayer(map_object, {
+                    user_name: 'andrewmartini',
+                    type: 'cartodb',
+                    sublayers: [{
+                        sql: "SELECT * FROM nyc_zipcode_2014_edit",
+                        cartocss: "#layer {   polygon-fill: #FFF;   polygon-opacity: 0;   line-color: #11002F;   line-width: 3;   line-opacity: 1; }  #nyc_zipcode_2014_edit::labels [zoom >12]{   text-name: [postal];   text-face-name: 'Lato Bold';   text-size: 14;   text-label-position-tolerance: 10;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple; } ",
+                        interactivity: "cartodb_id"}]
+                        });
+      var l_zipcode = new L.LayerGroup();
+      zipcode.addTo(l_zipcode);                            
 
 var precincts = cartodb.createLayer(map_object, 'https://ashron24.cartodb.com/api/v2/viz/2fe813da-3d35-11e5-8497-0e0c41326911/viz.json');
       var l_precincts = new L.LayerGroup();
       precincts.addTo(l_precincts); 
 
+var uhf_health = cartodb.createLayer(map_object, {
+                    user_name: 'andrewmartini',
+                    type: 'cartodb',
+                    sublayers: [{
+                        sql: "SELECT * FROM chs_2009_dohmh_2010b",
+                        cartocss: "#layer  {   polygon-fill: #FFf;   polygon-opacity: 0;   line-color: #000000;   line-width: 2;   line-opacity: 1; }  #chs_2009_dohmh_2010b::labels [zoom > 12] {   text-name: [first_uhf_];   text-face-name: 'Lato Regular';   text-size: 12;   text-label-position-tolerance: 0;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: true;   text-placement: interior;   text-placement-type: dummy; }",
+                        interactivity: "cartodb_id"}]
+                      });
+      var l_uhf_health = new L.LayerGroup();
+      uhf_health.addTo(l_uhf_health); 
+
 // group list for layer selector - list items appear in the order below: 
-var boundaries_group = {
+var boundaries_group = { 
                       "<span class='my-layer-item-blue'>Boroughs</span>": l_nybb,
                       "<span class='my-layer-item-blue'>Neighborhoods</span>": l_neighborhoods,
                       "<span class='my-layer-item-italic'>Neighborhood Labels</span>": l_neigh_labels, 
@@ -284,10 +293,12 @@ var boundaries_group = {
                       "<span class='my-layer-item-blue'>City Council</span>": l_nycc,
                       "<span class='my-layer-item-blue'>NY State Senate</span>": l_nyss,
                       "<span class='my-layer-item-blue'>NY State Assembly</span>": l_nyad,
-                      "<span class='my-layer-item-blue'>US Congressional</span>": l_nycd,
+                      "<span class='my-layer-item-blue'>US Congressional</span>": l_nycg,
                       "<span class='my-layer-item-blue'>2010 Census Tracts</span>": l_censustract,
                       "<span class='my-layer-item-blue'>DOE School Zones</span>": l_school_zone,
-                      "<span class='my-layer-item-blue'>Police Precincts</span>": l_precincts
+                      "<span class='my-layer-item-blue'>Police Precincts</span>": l_precincts,
+                      "<span class='my-layer-item-blue'>Zip Codes</span>": l_zipcode,
+                      "<span class='my-layer-item-blue'>UHF Zones</span>": l_uhf_health
                     };
    
   L.control.layers(null, boundaries_group, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
