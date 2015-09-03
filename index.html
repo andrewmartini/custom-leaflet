@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            CAU Clergy Map | DRAFT | 
+            DRAFT | CAU Map with 3 leaflet Layer selectors
         </title>
  
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -16,6 +16,7 @@
 
         <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" type="text/css" /> 
  
+
 
     <!-- <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script> -->
    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script> -->
@@ -33,23 +34,24 @@
 
 
 
-.leaflet-control-layers-toggle { 
+.leaflet-control-layers-toggle{ 
     width:auto;
     background-position:3px 50% ;
     padding:3px;
     padding-left:36px;
     text-decoration:none;
     line-height:36px;
+
 }
 
     .leaflet-right .leaflet-control {
       float: right;
       }
     .leaflet-top .leaflet-control {
-      margin-top: 5px;
+      margin-top: 10px;
       }
     .leaflet-bottom .leaflet-control {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       }
     .leaflet-left .leaflet-control {
       margin-left: 10px;
@@ -59,67 +61,40 @@
       }
 
 .leaflet-control-layers-expanded {
-      background: none repeat scroll 0 0 rgba(246, 249, 254, 0.95);
+      background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.95);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-      font-weight: 500;
       padding: 10px 16px 6px 5px;   /* top, right, bottom, left */
-      height: 115px;
-      width: 175px;
+      height: 120px;
+      width: 165px;
       overflow: auto;    /* allows scrolling in selector */
     }
 
  .my-layer-item-bold {      /* black layer item */
        font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
        color: #000000;
-       font-weight: 700;
+       font-weight: 500;
 }
+
+ .my-layer-item-red {      /* red layer item */
+       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+       color: #800000;
+}
+
+ .my-layer-item-blue {      /* blue layer item */
+       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+       color: #045a8d;
+}
+
  .my-layer-item-italic {      /* italic */
        font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
        font-style: italic;
        color: #74a9cf;
 }
 
- .my-layer-item-red {      /* red layer item */
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #800000; font-weight: 500;
-}
-
- .my-layer-item-steelblue {     
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #4682B4; font-weight: 500;
-}
-
- .my-layer-item-blue {      /* blue layer item */
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #0000cc; font-weight: 500;
-}
- .my-layer-item-purple {     
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #800080; font-weight: 500;
-}
 
 
- .my-layer-item-salmon {    
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #CD5C5C;  font-weight: 500;
-}
- .my-layer-item-orange {    
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #FFA500; font-weight: 500;
-}
- .my-layer-item-yellow {    
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #DAA520;  font-weight: 500;
-}
-
- .my-layer-item-green {     
-       font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-       color: #497B49; font-weight: 500;
-}
-
-/*
 .instructions {
         position: absolute;
         top: 10px;
@@ -128,10 +103,10 @@
         border-radius: 5px;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
         font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
-        padding: 1px 12px 4px 4px;   /* top, right, bottom, left 
+        padding: 1px 12px 4px 4px;   /* top, right, bottom, left */
         height: 80px;
         width: 230px;
-        overflow: auto;    /* allows scrolling in selector 
+        overflow: auto;    /* allows scrolling in selector */
     }
 
       .instruct_title {
@@ -145,12 +120,12 @@
         font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
         color: #000;
         padding: 5px 1px 4px 4px;
-       } */
+       }
 
 /* change the appearance of the leaflet zoom control, copied from http://wcfcourier.com/app/special/fatalcrashes/css/styles.css */
 .leaflet-control-zoom a {
     background-color: #333;
-    color: #FFF;  /*black*/
+    color: #FFF;
     text-decoration: none;
 }
 
@@ -177,45 +152,34 @@
 /* "Legend"  */
 #legend, #hide_show_legend {
   background-color: #333;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
-  border-radius: 4px;
-  left: 45px;
+  border-radius: 5px;
+  left: 50px;
   position: absolute;
   z-index: 8;
   top: 10px;
   color: #FFF;
-  font: 13px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
-}
-.title {
-  font: 32px/1.4 "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-weight: 700;
-  text-align: right;
-
+  font: 13px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 #legend {
   width: 25%;
-  max-width: 220px;
-  max-height: 100px;
+  max-width: 250px;
   z-index: 7;
-  padding: 0 25px 2px 8px;
-  border: none;
-  overflow: auto;
+  padding: 0 10px 0 10px;
+  border: 1px solid #FFF;
 }
 #legend h1 {
   width: 25%;
-  text-align: right;
   max-width: 200px;
   z-index: 7;
-  padding: 2px 0 0 85px;
+  padding: 2px 0 0 50px;
   border: none;
 }
 
-.legend p {
-  margin: 2px;
-  text-align: left;
+#legend p {
+  margin: none;
   line-height: 13px;
-  padding: 2px 5px 2px 5px;
+  padding-bottom: 1px;
   clear: both;
 }
 
@@ -224,8 +188,8 @@
 #hide_show_legend {
   height: 20px;
   z-index: 8;
-  padding: 5px 0 0 6px;
-  margin: 0 0 0 0;
+  padding: 5px 0 0 5px;
+  margin: 5px 0 0 5px;
           font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
           font-weight: 700;
         color: #0080ff;
@@ -266,16 +230,16 @@
   <div id="hide_show_legend">
     <div class="hide_legend">
       <!-- <div class="icon-sort-up"></div> -->
-      <div class="hide_show_legend_text"> HIDE </div>
+      <div class="hide_show_legend_text"> Hide </div>
     </div>
     <div class="show_legend" style="display: none;">
       <!-- <div class="icon-sort-down"></div> -->
-      <div class="hide_show_legend_text"> SHOW </div>
+      <div class="hide_show_legend_text"> Show </div>
     </div>
   </div>
 
   <div id="legend" class="box-shadow">
-      <p class = "title">Instructions</p>
+      <h1>Instructions</h1>
 
       <div id="legend-text-intro">
         <p><hr>Layers are drawn as you select them, newest on top of oldest. To change the order, simply toggle a layer off and then on again to make it appear on top of others.</p>
@@ -321,8 +285,8 @@ $('#hide_show_legend').click(function() {
                     center: [40.7033127,-73.979681], // New York, NY
                     zoom: 11,
                     maxZoom: 16,
-                    minZoom: 10
-                    //scrollWheelZoom: false   // to keep from zooming accidentally
+                    minZoom: 10,
+                    scrollWheelZoom: false   // to keep from zooming  accidentally
 
                 });
 
@@ -348,7 +312,7 @@ var neighborhoods = cartodb.createLayer(map_object, {
     neighborhoods.addTo(l_neighborhoods);
 
 
- var neigh_labels = cartodb.createLayer(map_object, {
+var neigh_labels = cartodb.createLayer(map_object, {
                     user_name: 'andrewmartini',
                     type: 'cartodb',
                     sublayers: [{
@@ -365,59 +329,35 @@ var nycc = cartodb.createLayer(map_object, {
                     type: 'cartodb',
                     sublayers: [{
                       sql: "SELECT * FROM nycc",
-                      cartocss: "#layer{ polygon-fill: #000000; polygon-opacity: 0; line-color: #000000; line-width: 2; line-opacity: 1; } #nycc::labels [zoom >= 12]{   text-name: [coundist];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;  text-character-spacing: 1.3; text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1.5;   text-dy: 10;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
+                      cartocss: "#layer{ polygon-fill: #000000; polygon-opacity: 0; line-color: #000000; line-width: 3; line-opacity: 1; } #nycc::labels [zoom >12]{   text-name: [coundist];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
                       interactivity: "cartodb_id"}]
                   });
       var l_nycc = new L.LayerGroup();
       nycc.addTo(l_nycc);  
 
-var nycd = cartodb.createLayer(map_object, {
-                    user_name: 'andrewmartini',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT * FROM nycd WHERE borocd <> 164",
-                      cartocss: "#layer { polygon-fill: #000000; polygon-opacity: 0; line-color: #000000; line-width: 2; line-opacity: 1; } #nycd::labels [zoom >= 12]{   text-name: [borocd];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;  text-character-spacing: 1.3; text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1.5;   text-dy: 10;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
-                      interactivity: "cartodb_id"}]
-                  });
+var nycd = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/3f321284-29b0-11e5-a0f8-0e018d66dc29/viz.json');
       var l_nycd = new L.LayerGroup();
       nycd.addTo(l_nycd); 
 
-
-var nyss = cartodb.createLayer(map_object, {
-                    user_name: 'andrewmartini',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT * FROM nyss WHERE stsendist is not null",
-                      cartocss: "#layer { polygon-fill: #000000; polygon-opacity: 0; line-color: #191970; line-width: 2; line-opacity: 1; } #nyss::labels [zoom >= 12]{   text-name: [stsendist];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;  text-character-spacing: 1.3; text-fill: #191970;   text-halo-fill: #FFF;   text-halo-radius: 1.5;   text-dy: 10;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
-                      interactivity: "cartodb_id"}]
-                  });
+var nyss = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/394257cc-2a5e-11e5-9e3f-0e853d047bba/viz.json');
       var l_nyss = new L.LayerGroup();
       nyss.addTo(l_nyss); 
 
-
-var nyad = cartodb.createLayer(map_object, {
-                    user_name: 'andrewmartini',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT * FROM nyad WHERE assemdist is not null",
-                      cartocss: "#layer { polygon-fill: #000; polygon-opacity: 0; line-color: #191970; line-width: 2; line-opacity: 1; } #nyad::labels [zoom >= 12]{   text-name: [assemdist];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;  text-character-spacing: 1.3; text-fill: #191970;   text-halo-fill: #FFF;   text-halo-radius: 1.5;   text-dy: 10;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
-                      interactivity: "cartodb_id"}]
-                  });
+var nyad = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/8aa5a57e-2a5e-11e5-9807-0e9d821ea90d/viz.json');
       var l_nyad = new L.LayerGroup();
       nyad.addTo(l_nyad); 
 
-
-var nycg = cartodb.createLayer(map_object, {
-                    user_name: 'andrewmartini',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT * FROM nycg WHERE congdist is not null",
-                      cartocss: "#layer { polygon-fill: #000; polygon-opacity: 0; line-color: #B22222; line-width: 2; line-opacity: 1; } #nycg::labels [zoom >= 12]{   text-name: [congdist];   text-face-name: 'Lato Bold';   text-size: 18;   text-label-position-tolerance: 10;  text-character-spacing: 1.3; text-fill: #B22222;   text-halo-fill: #FFF;   text-halo-radius: 1.5;   text-dy: 10;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple;}",
-                      interactivity: "cartodb_id"}]
-                  });
+var nycg = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/d0fb1b72-2a5d-11e5-a731-0e4fddd5de28/viz.json');
       var l_nycg = new L.LayerGroup();
       nycg.addTo(l_nycg); 
 
+var censustract = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/8e9dcb04-9821-11e4-a998-0e9d821ea90d/viz.json');
+      var l_censustract = new L.LayerGroup();
+      censustract.addTo(l_censustract); 
+
+var school_zone = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/0546aec0-2a7f-11e5-9807-0e9d821ea90d/viz.json');
+      var l_school_zone = new L.LayerGroup();
+      school_zone.addTo(l_school_zone); 
 
 var nybb = cartodb.createLayer(map_object, {
                     user_name: 'andrewmartini',
@@ -435,7 +375,7 @@ var nybb = cartodb.createLayer(map_object, {
                     type: 'cartodb',
                     sublayers: [{
                         sql: "SELECT * FROM nyc_zipcode_2014_edit",
-                        cartocss: "#layer {   polygon-fill: #FFF;   polygon-opacity: 0;   line-color: #11002F;   line-width: 2;   line-opacity: 1; }  #nyc_zipcode_2014_edit::labels [zoom >12]{   text-name: [postal];   text-face-name: 'Lato Bold';   text-size: 14;   text-label-position-tolerance: 10;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple; } ",
+                        cartocss: "#layer {   polygon-fill: #FFF;   polygon-opacity: 0;   line-color: #11002F;   line-width: 3;   line-opacity: 1; }  #nyc_zipcode_2014_edit::labels [zoom >12]{   text-name: [postal];   text-face-name: 'Lato Bold';   text-size: 14;   text-label-position-tolerance: 10;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: false;   text-placement: interior;   text-placement-type: simple; } ",
                         interactivity: "cartodb_id"}]
                         });
       var l_zipcode = new L.LayerGroup();
@@ -456,187 +396,184 @@ var uhf_health = cartodb.createLayer(map_object, {
       var l_uhf_health = new L.LayerGroup();
       uhf_health.addTo(l_uhf_health); 
 
-
-    
-
-// group list for layer selector -  ITEMS WILL APPEAR IN THE ORDER YOU PUT THEM IN BELOW:  
+// group list for layer selector - list items appear in the order below: 
 var boundaries_group = { 
-                      "<span class='my-layer-item-steelblue'>Boroughs</span>": l_nybb,
-                      "<span class='my-layer-item-steelblue'>Neighborhoods</span>": l_neighborhoods,
+                      "<span class='my-layer-item-blue'>Boroughs</span>": l_nybb,
+                      "<span class='my-layer-item-blue'>Neighborhoods</span>": l_neighborhoods,
                       "<span class='my-layer-item-italic'>Neighborhood Labels</span>": l_neigh_labels, 
-                      "<span class='my-layer-item-steelblue'>Community Districts</span>": l_nycd,
-                      "<span class='my-layer-item-steelblue'>City Council</span>": l_nycc,
-                      "<span class='my-layer-item-steelblue'>NY State Senate</span>": l_nyss,
-                      "<span class='my-layer-item-steelblue'>NY State Assembly</span>": l_nyad,
-                      "<span class='my-layer-item-steelblue'>US Congressional</span>": l_nycg,
-                      "<span class='my-layer-item-steelblue'>Police Precincts</span>": l_precincts,
-                      "<span class='my-layer-item-steelblue'>Zip Codes</span>": l_zipcode,
-                      "<span class='my-layer-item-steelblue'>UHF Zones</span>": l_uhf_health
+                      "<span class='my-layer-item-blue'>Community Districts</span>": l_nycd,
+                      "<span class='my-layer-item-blue'>City Council</span>": l_nycc,
+                      "<span class='my-layer-item-blue'>NY State Senate</span>": l_nyss,
+                      "<span class='my-layer-item-blue'>NY State Assembly</span>": l_nyad,
+                      "<span class='my-layer-item-blue'>US Congressional</span>": l_nycg,
+                      "<span class='my-layer-item-blue'>2010 Census Tracts</span>": l_censustract,
+                      "<span class='my-layer-item-blue'>DOE School Zones</span>": l_school_zone,
+                      "<span class='my-layer-item-blue'>Police Precincts</span>": l_precincts,
+                      "<span class='my-layer-item-blue'>Zip Codes</span>": l_zipcode,
+                      "<span class='my-layer-item-blue'>UHF Zones</span>": l_uhf_health
                     };
    
   L.control.layers(null, boundaries_group, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
 
 
-// **********************************************************************************
-// Leaflet Religious and CBO's overlays using cartodb.createLayer and .addTo() method
 
-var cbo = cartodb.createLayer(map_object, {  // CBOs
-                    user_name: 'ashron24',
+
+
+// ***********************************************************************
+// Leaflet DEMOGRAPHIC overlays using cartodb.createLayer and .addTo() method
+
+var foreign_born_choro = cartodb.createLayer(map_object, {   //foreign born
+                    user_name: 'andrewmartini',
                     type: 'cartodb',
                     sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, label FROM scrieloc2_1 ",
-                      cartocss: "#layer [label='CBO'][zoom >= 10] {marker-width: 6; marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/20150519173646protest.svg); marker-line-color: #FFFFFF; marker-placement: point; marker-type: ellipse;  marker-allow-overlap: true; }  #layer  [label='CBO'] [zoom >= 11] { marker-width: 9; } #layer [label='CBO'][zoom >= 12]{marker-width: 12; } #layer  [label='CBO'] [zoom >= 13]{   marker-width: 18; } #layer  [label='CBO'] [zoom >= 15]{ marker-width: 24; }",
-                      interactivity: "cartodb_id"}]
-                  });
-    var l_cbo = new L.LayerGroup();
-    cbo.addTo(l_cbo);
+                      sql: "SELECT * FROM tracttemp",
+                      cartocss: "#tracttemp  {  polygon-fill: #FFFFB2;  polygon-opacity: 0.8;   line-color: #FFF;  line-width: 0.5;  line-opacity: 1; } #tracttemp [ foreignbor <= 8512] {  polygon-fill: #BD0026; } #tracttemp [ foreignbor <= 2314] {   polygon-fill: #F03B20; } #tracttemp [ foreignbor <= 1596] {   polygon-fill: #FD8D3C; } #tracttemp [ foreignbor <= 1076] {   polygon-fill: #FECC5C; } #tracttemp [ foreignbor <= 649] {  polygon-fill: #FFFFB2; }",
+                      interactivity: "cartodb_id" }] 
+                    });
+    var l_foreign_born_choro = new L.LayerGroup();
+    foreign_born_choro.addTo(l_foreign_born_choro);
 
-var health = cartodb.createLayer(map_object, {  //hospitals and clinics
-                    user_name: 'ashron24',
+var turkish_graduated = cartodb.createLayer(map_object, 'https://ashron2224.cartodb.com/api/v2/viz/90b2c52e-2b11-11e5-bd2c-0e853d047bba/viz.json');
+    var l_turkish_graduated = new L.LayerGroup();
+    turkish_graduated.addTo(l_turkish_graduated);
+
+
+var black_hh_choro = cartodb.createLayer(map_object, {  //black HH
+                    user_name: 'andrewmartini',
                     type: 'cartodb',
                     sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, label FROM scrieloc2_1 ",
-                      cartocss: "#layer [label='Health'][zoom >= 10] {marker-width: 6; marker-file: url('https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/20150707191228Hospital_Sign_Silhouette_32.png'); marker-line-color: #FFFFFF; marker-placement: point; marker-type: ellipse;  marker-allow-overlap: true; }  #layer  [label='Health'] [zoom >= 11] { marker-width: 9; } #layer [label='Health'][zoom >= 12]{marker-width: 12; } #layer  [label='Health'] [zoom >= 13]{   marker-width: 18; } #layer  [label='Health'] [zoom >= 15]{ marker-width: 24; }",
+                      sql: "SELECT * FROM tracttemp",
+                      cartocss: "#tracttemp {  polygon-fill: #FFFFB2;  polygon-opacity: 0.8; line-color: #FFF;  line-width: 0.5; line-opacity: 1; } #tracttemp [ blackhh <= 7344] { polygon-fill: #BD0026; } #tracttemp [ blackhh <= 1061] { polygon-fill: #F03B20;} #tracttemp [ blackhh <= 663] {  polygon-fill: #FD8D3C; } #tracttemp [ blackhh <= 405] {  polygon-fill: #FECC5C; } #tracttemp [ blackhh <= 174] {   polygon-fill: #FFFFB2; }",
                       interactivity: "cartodb_id"}]
                   });
-    var l_health = new L.LayerGroup();
-    health.addTo(l_health);
+    var l_black_hh_choro = new L.LayerGroup();
+    black_hh_choro.addTo(l_black_hh_choro);
 
-var library = cartodb.createLayer(map_object, {  //libraries
-                    user_name: 'ashron24',
+var whitenh_choro_pct = cartodb.createLayer(map_object, {  //percent nh white
+                    user_name: 'andrewmartini',
                     type: 'cartodb',
                     sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, label FROM scrieloc2_1 ",
-                      cartocss: "#layer [label='Library'][zoom >= 10] {marker-width: 6;marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/20150707192220Open_book_32.png); marker-line-color: #FFFFFF; marker-placement: point; marker-type: ellipse;  marker-allow-overlap: true; }  #layer  [label='Library'] [zoom >= 11] { marker-width: 9; } #layer [label='Library'][zoom >= 12]{marker-width: 12; } #layer  [label='Library'] [zoom >= 13]{   marker-width: 18; } #layer  [label='Library'] [zoom >= 15]{ marker-width: 24; }",
+                      sql: "SELECT cartodb_id, the_geom_webmercator, nhwhite / totalpop as pctwhite FROM tracttemp WHERE Totalpop > 250",
+                      cartocss: "#tracttemp{   polygon-fill: #EDF8FB;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ pctwhite <= 1] {    polygon-fill: #005824; } #tracttemp [ pctwhite <= 0.751160092807425] {    polygon-fill: #238B45; } #tracttemp [ pctwhite <= 0.58700882117081] {    polygon-fill: #41AE76; } #tracttemp [ pctwhite <= 0.374905326937642] {    polygon-fill: #66C2A4; } #tracttemp [ pctwhite <= 0.155355682747343] {    polygon-fill: #CCECE6; } #tracttemp [ pctwhite <= 0.0617375781017554] {    polygon-fill: #D7FAF4; } #tracttemp [ pctwhite <= 0.0192] {    polygon-fill: #EDF8FB; }",
                       interactivity: "cartodb_id"}]
                   });
-    var l_library = new L.LayerGroup();
-    library.addTo(l_library);
+    var l_whitenh_choro_pct = new L.LayerGroup();
+    whitenh_choro_pct.addTo(l_whitenh_choro_pct);
 
-var fac = cartodb.createLayer(map_object, {  // facilities
-                    user_name: 'ashron24',
+
+var median_inc_choro = cartodb.createLayer(map_object, {   //median hh income
+                        user_name: 'andrewmartini',
+                        type: 'cartodb',
+                        sublayers: [{
+                          sql: "SELECT * FROM tracttemp",
+                          cartocss: "#tracttemp { polygon-fill: #1a9850;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0.5;  line-opacity: 1; } #tracttemp [ medianhhin <= 243622] {  polygon-fill: #d73027; } #tracttemp [ medianhhin <= 84240] {  polygon-fill: #f79272; } #tracttemp [ medianhhin <= 67394] {   polygon-fill: #fed6b0; } #tracttemp [ medianhhin <= 57176] {  polygon-fill: #fff2cc; } #tracttemp [ medianhhin <= 48159] { polygon-fill: #d2ecb4; } #tracttemp [ medianhhin <= 39538] {   polygon-fill: #8cce8a; } #tracttemp [ medianhhin <= 30106] { polygon-fill: #1a9850; }",
+                        interactivity: "cartodb_id"}]
+                      });
+    var l_median_inc_choro  = new L.LayerGroup();
+    median_inc_choro.addTo(l_median_inc_choro);
+
+var employ_foodserv_choro = cartodb.createLayer(map_object, {  //empl food serv
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp {   polygon-fill: #EDF8FB;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ empfoodser <= 1326] {    polygon-fill: #005824; } #tracttemp [ empfoodser <= 448] {    polygon-fill: #238B45; } #tracttemp [ empfoodser <= 307] {    polygon-fill: #41AE76; } #tracttemp [ empfoodser <= 221] {    polygon-fill: #66C2A4; } #tracttemp [ empfoodser <= 160] {    polygon-fill: #CCECE6; } #tracttemp [ empfoodser <= 107] {    polygon-fill: #D7FAF4; } #tracttemp [ empfoodser <= 54] {    polygon-fill: #EDF8FB; }",
+                      interactivity: "cartodb_id"}]
+                    });
+    var l_employ_foodserv_choro  = new L.LayerGroup();
+    employ_foodserv_choro.addTo(l_employ_foodserv_choro);
+
+var high_school_choro_pct = cartodb.createLayer(map_object, {   //high school percent
+                    user_name: 'andrewmartini',
                     type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, label FROM scrieloc2_1 ",
-                      cartocss: "#layer [label='Fac'][zoom >= 10] {marker-width: 7; marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/20150707192143Swimming_silhouette_32.png); marker-line-color: #FFFFFF; marker-placement: point; marker-type: ellipse;  marker-allow-overlap: true; }  #layer  [label='Fac'] [zoom >= 11] { marker-width: 10; } #layer [label='Fac'][zoom >= 12]{marker-width: 13; } #layer  [label='Fac'] [zoom >= 13]{   marker-width: 19; } #layer  [label='Fac'] [zoom >= 15]{ marker-width: 25; }",
+                      sublayers: [{
+                        sql: "SELECT the_geom_webmercator, highschool/popover24 AS hs_percent FROM tracttemp",
+                        cartocss: "#layer{   polygon-fill: #F1E6F1;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ hs_percent <= 0.50] {    polygon-fill: #8A4E8A; } #tracttemp [ hs_percent <= 0.34] {    polygon-fill: #A05AA0; } #tracttemp [ hs_percent <= 0.29] {    polygon-fill: #B379B3; } #tracttemp [ hs_percent <= 0.24] {    polygon-fill: #D8BBD8; } #tracttemp [ hs_percent <= 0.18] {    polygon-fill: #F1E6F1; }",
                       interactivity: "cartodb_id"}]
-                  });
-    var l_fac = new L.LayerGroup();
-    fac.addTo(l_fac);
+                    });
+    var l_high_school_choro_pct  = new L.LayerGroup();
+    high_school_choro_pct.addTo(l_high_school_choro_pct);
 
-var christian = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge ",
-                      cartocss: "#layer [religion='Christian'] [zoom >= 10] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031200002750-px-red_cross.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;  marker-line-width: 1;  marker-line-opacity: 1;    marker-placement: point;  marker-type: ellipse;  marker-width: 5;  marker-allow-overlap: true; }  #layer [religion='Christian'] [zoom >= 11] {    marker-width: 8; } #layer [religion='Christian'] [zoom >= 12] {    marker-width: 12; } #layer [religion='Christian'] [zoom >= 13] {    marker-width: 18; } #layer [religion='Christian'] [zoom >= 14] {marker-width: 24; } #layer [religion='Christian'] [zoom >= 15] { marker-width: 30; } ",
+var high_school_choro_num = cartodb.createLayer(map_object, {   //high school
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   polygon-fill: #FFFFB2;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0.5;   line-opacity: 1; } #tracttemp [ highschool <= 6069] {    polygon-fill: #B10026; } #tracttemp [ highschool <= 1200] {    polygon-fill: #E31A1C; } #tracttemp [ highschool <= 932] {    polygon-fill: #FC4E2A; } #tracttemp [ highschool <= 744] {    polygon-fill: #FD8D3C; } #tracttemp [ highschool <= 572] {    polygon-fill: #FEB24C; } #tracttemp [ highschool <= 409] {    polygon-fill: #FED976; } #tracttemp [ highschool <= 239] {    polygon-fill: #FFFFB2; }",
                       interactivity: "cartodb_id"}]
-                  });
-    var l_christian = new L.LayerGroup();
-    christian.addTo(l_christian);
+                    });
+    var l_high_school_choro_num = new L.LayerGroup();
+    high_school_choro_num.addTo(l_high_school_choro_num); 
 
-var jewish = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [religion='Jewish'] [zoom >= 10]  { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031200003950-px-Star_of_David.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 1;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 5;    marker-allow-overlap: true; }  #layer  [religion='Jewish'] [zoom >= 11] {    marker-width: 8; } #layer  [religion='Jewish'] [zoom >= 12] {    marker-width: 12; } #layer [zoom >= 13] [religion='Jewish'] {    marker-width: 18; } #layer [religion='Jewish'] [zoom >= 14]  {    marker-width: 24; } #layer  [religion='Jewish'] [zoom >= 15] {    marker-width: 30; } ",
+var muslim_lang_choro = cartodb.createLayer(map_object, {   // kids speaking potential muslim languages
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM schlang_merge_04_30",
+                        cartocss: "#schlang_merge_04_30 { polygon-fill: #EDF8FB; polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0.5;  line-opacity: 1; } #schlang_merge_04_30 [ _mus4_pct <= 0.49] {  polygon-fill: #005824; } #schlang_merge_04_30 [ _mus4_pct <= 0.29] {  polygon-fill: #238B45; } #schlang_merge_04_30 [ _mus4_pct <= 0.22] {  polygon-fill: #41AE76; } #schlang_merge_04_30 [ _mus4_pct <= 0.17] {  polygon-fill: #66C2A4; } #schlang_merge_04_30 [ _mus4_pct <= 0.12] {  polygon-fill: #CCECE6; } #schlang_merge_04_30 [ _mus4_pct <= 0.08] {  polygon-fill: #D7FAF4; } #schlang_merge_04_30 [ _mus4_pct <= 0.04] { polygon-fill: #EDF8FB; }",
                       interactivity: "cartodb_id"}]
-                  });
-    var l_jewish = new L.LayerGroup();
-    jewish.addTo(l_jewish);
+                    });
+    var l_muslim_lang_choro = new L.LayerGroup();
+    muslim_lang_choro.addTo(l_muslim_lang_choro); 
 
-var muslim = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [zoom >= 10][religion='Muslim'] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031200004950-px-muslim_crescent.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 5;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 5;    marker-allow-overlap: true; }   #haroldclergy3_11_15_merge [zoom >= 11][religion='Muslim'] {    marker-width: 8; } #haroldclergy3_11_15_merge [zoom >= 12][religion='Muslim'] {    marker-width: 12; } #haroldclergy3_11_15_merge [zoom >= 13][religion='Muslim'] {    marker-width: 18; } #haroldclergy3_11_15_merge [zoom >= 14][religion='Muslim'] {    marker-width: 24; } #haroldclergy3_11_15_merge [zoom >= 15][religion='Muslim'] {    marker-width: 30; } ",
+var single_mom_choro = cartodb.createLayer(map_object, {   // single mom HH's
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   polygon-fill: #ECF0F6;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0;   line-opacity: 1; } #tracttemp [ singlemom <= 2279] {    polygon-fill: #43618F; } #tracttemp [ singlemom <= 738] {    polygon-fill: #4E71A6; } #tracttemp [ singlemom <= 563] {    polygon-fill: #6182B5; } #tracttemp [ singlemom <= 417] {    polygon-fill: #849EC5; } #tracttemp [ singlemom <= 304] {    polygon-fill: #9BB0D0; } #tracttemp [ singlemom <= 200] {    polygon-fill: #B2C2DB; } #tracttemp [ singlemom <= 102] {    polygon-fill: #ECF0F6; }",
                       interactivity: "cartodb_id"}]
-                  });
-    var l_muslim = new L.LayerGroup();
-    muslim.addTo(l_muslim);
+                    });
+    var l_single_mom_choro = new L.LayerGroup();
+    single_mom_choro.addTo(l_single_mom_choro); 
 
-var buddhist = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [zoom >=10][religion='Buddhist'] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031119270050-px-orange-dharma_wheel_2.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 1;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 5;    marker-allow-overlap: true; }  #haroldclergy3_11_15_merge [zoom >= 11][religion='Buddhist'] {    marker-width: 8; } #haroldclergy3_11_15_merge [zoom >= 12][religion='Buddhist'] {    marker-width: 12; } #haroldclergy3_11_15_merge [zoom >= 13][religion='Buddhist'] {    marker-width: 18; } #haroldclergy3_11_15_merge [zoom >= 14][religion='Buddhist'] {    marker-width: 24; } #haroldclergy3_11_15_merge [zoom >= 15][religion='Buddhist'] {    marker-width: 30; } ",
+
+var hispanic2_choro = cartodb.createLayer(map_object, {   // Hispanic HH's
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   polygon-fill: #FFFFB2;   polygon-opacity: 0.8;   line-color: #FFF;   line-width: 0;   line-opacity: 1; } #tracttemp [ hispanic2 <= 13784] {    polygon-fill: #B10026; } #tracttemp [ hispanic2 <= 2977] {    polygon-fill: #E31A1C; } #tracttemp [ hispanic2 <= 1781] {    polygon-fill: #FC4E2A; } #tracttemp [ hispanic2 <= 1064] {    polygon-fill: #FD8D3C; } #tracttemp [ hispanic2 <= 735] {    polygon-fill: #FEB24C; } #tracttemp [ hispanic2 <= 457] {    polygon-fill: #FED976; } #tracttemp [ hispanic2 <= 224] {    polygon-fill: #FFFFB2; }",
                       interactivity: "cartodb_id"}]
-                  });
-    var l_buddhist = new L.LayerGroup();
-    buddhist.addTo(l_buddhist);
+                    });
+    var l_hispanic2_choro = new L.LayerGroup();
+    hispanic2_choro.addTo(l_hispanic2_choro); 
 
-var hindu = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [zoom >= 10][religion='Hindu'] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031119272950-pixel-Om.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 1;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 5;    marker-allow-overlap: true; }  #haroldclergy3_11_15_merge [zoom >= 11][religion='Hindu'] {    marker-width: 8; } #haroldclergy3_11_15_merge [zoom >= 12][religion='Hindu'] {    marker-width: 12; } #haroldclergy3_11_15_merge [zoom >= 13][religion='Hindu'] {    marker-width: 18; } #haroldclergy3_11_15_merge [zoom >= 14][religion='Hindu'] {    marker-width: 24; } #haroldclergy3_11_15_merge [zoom >= 15] [religion='Hindu'] {  marker-width: 30; } ",
+
+var haitian_graduated = cartodb.createLayer(map_object, {   // Haitian descent? or immigrants?
+                      user_name: 'andrewmartini',
+                      type: 'cartodb',
+                      sublayers: [{
+                        sql: "SELECT * FROM tracttemp",
+                        cartocss: "#tracttemp{   marker-fill-opacity: 0.5;   marker-line-color: #FF2900;   marker-line-width: 0.5;   marker-line-opacity: 1;   marker-placement: point;   marker-multi-policy: largest;   marker-type: ellipse;   marker-fill: #FF5C00;   marker-allow-overlap: true;   marker-clip: false; } #tracttemp [ haitian <= 1539] {    marker-width: 20.0; } #tracttemp [ haitian <= 666] {    marker-width: 18.3; } #tracttemp [ haitian <= 490] {    marker-width: 16.7; } #tracttemp [ haitian <= 337] {    marker-width: 15.0; } #tracttemp [ haitian <= 257] {    marker-width: 13.3; } #tracttemp [ haitian <= 188] {    marker-width: 11.7; } #tracttemp [ haitian <= 137] {    marker-width: 10.0; } #tracttemp [ haitian <= 95] {    marker-width: 8.3; } #tracttemp [ haitian <= 61] {    marker-width: 6.7; } #tracttemp [ haitian <= 30] {    marker-width: 0.0; }",
                       interactivity: "cartodb_id"}]
-                  });
-    var l_hindu = new L.LayerGroup();
-    hindu.addTo(l_hindu);
-
-var sikh = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [zoom >= 10][religion='Sikh'] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031119271550-px-yellow-Khanda.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 1;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 5;    marker-allow-overlap: true; }   #haroldclergy3_11_15_merge [zoom >= 11][religion='Sikh'] {    marker-width: 8; } #haroldclergy3_11_15_merge [zoom >= 12][religion='Sikh'] {    marker-width: 12; } #haroldclergy3_11_15_merge [zoom >= 13][religion='Sikh'] {    marker-width: 18; } #haroldclergy3_11_15_merge [zoom >= 14][religion='Sikh'] {    marker-width: 24; } #haroldclergy3_11_15_merge [zoom >= 15][religion='Sikh'] {    marker-width: 30; } ",
-                      interactivity: "cartodb_id"}]
-                  });
-    var l_sikh = new L.LayerGroup();
-    sikh.addTo(l_sikh);
-
-var krishna = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [zoom >= 10][religion='Hare Krishna'] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/20150707172351lotus50px.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 1;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 5;    marker-allow-overlap: true; }  #haroldclergy3_11_15_merge  #haroldclergy3_11_15_merge [zoom >= 11][religion='Hare Krishna'] {    marker-width: 8; } #haroldclergy3_11_15_merge [zoom >= 12][religion='Hare Krishna'] {    marker-width: 12; } #haroldclergy3_11_15_merge [zoom >= 13][religion='Hare Krishna'] {    marker-width: 18; } #haroldclergy3_11_15_merge [zoom >= 14][religion='Hare Krishna'] {    marker-width: 24; } #haroldclergy3_11_15_merge [zoom >= 15][religion='Hare Krishna'] {    marker-width: 30; } ",
-                      interactivity: "cartodb_id"}]
-                  });
-    var l_krishna = new L.LayerGroup();
-    krishna.addTo(l_krishna);
-
-var other_religion = cartodb.createLayer(map_object, {  // religion type
-                    user_name: 'ashron24',
-                    type: 'cartodb',
-                    sublayers: [{
-                      sql: "SELECT cartodb_id, the_geom_webmercator, religion FROM haroldclergy3_11_15_merge",
-                      cartocss: "#layer [zoom >= 10][religion=''] { marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/ashron24/assets/2015031200010650-px-domed_building.png);   marker-fill-opacity: 0.9;    marker-line-color: #FFF;    marker-line-width: 5;    marker-line-opacity: 1;    marker-placement: point;    marker-type: ellipse;    marker-width: 1;    marker-allow-overlap: true; }  #haroldclergy3_11_15_merge [zoom >= 11][religion=''] {    marker-width: 8; } #haroldclergy3_11_15_merge [zoom >= 12][religion=''] {    marker-width: 12; } #haroldclergy3_11_15_merge [zoom >= 13][religion=''] {    marker-width: 18; } #haroldclergy3_11_15_merge [zoom >= 14][religion=''] {    marker-width: 24; } #haroldclergy3_11_15_merge [zoom >= 15][religion=''] {    marker-width: 30; } ",
-                      interactivity: "cartodb_id"}]
-                  });
-    var l_other_religion = new L.LayerGroup();
-    other_religion.addTo(l_other_religion);
-
-                      "<span class='my-layer-item-blue'>Jewish Orgs</span>"
-
-
-
-              var clergy_cbo = {
-                      "Community Based Orgs": l_cbo,
-                      "Hospitals & Clinics": l_health,
-                      "Libraries": l_library,
-                      "Senior & Rec Centers": l_fac,
-                      "<span class='my-layer-item-red'>Christian Orgs</span>": l_christian,
-                      "<span class='my-layer-item-blue'>Jewish Orgs</span>": l_jewish,
-                      "<span class='my-layer-item-green'>Muslim Orgs</span>": l_muslim,
-                      "<span class='my-layer-item-salmon'>Hindu Orgs</span>": l_hindu,
-                      "<span class='my-layer-item-orange'>Buddhist Orgs</span>": l_buddhist,
-                      "<span class='my-layer-item-yellow'>Sikh Orgs</span>": l_sikh,
-                      "<span class='my-layer-item-purple'>Hare Krishna Orgs</span>": l_krishna, 
-                      "Other Religious Orgs": l_other_religion                   
+                    });
+    var l_haitian_graduated = new L.LayerGroup();
+    haitian_graduated.addTo(l_haitian_graduated);     
+                  
+              var demographics = {
+                      "Number Foreign Born": l_foreign_born_choro,
+                      "Turkish": l_turkish_graduated, 
+                      "Haitian": l_haitian_graduated,
+                      "Black Households": l_black_hh_choro,
+                      "Hispanic Households": l_hispanic2_choro,
+                      "Percent White": l_whitenh_choro_pct,
+                      "Median HH Income": l_employ_foodserv_choro,
+                      "Empl. Food Service": l_employ_foodserv_choro,
+                      "<span class='my-layer-item-red'>Pct High School</span>": l_high_school_choro_pct,
+                      "Num High School": l_high_school_choro_num,
+                      "Muslim School Lang": l_muslim_lang_choro,
+                      "Single Mom HH's": l_single_mom_choro
                 };
 
-                L.control.layers(null, clergy_cbo, {collapsed: false, position:'topright', autoZIndex:false}).addTo(map_object);
+                L.control.layers(null, demographics, {collapsed: false, position:'topright', autoZIndex:false}).addTo(map_object);
+               
+
 
 
 
 //******************************************************
-// GROUP 3 CAU OUTREACH TARGETS 
+// GROUP C USING  the 'un-nested' / addTo()  method 
 
 
   var rentreg = cartodb.createLayer(map_object, 'https://ashron24.cartodb.com/api/v2/viz/3c71fd52-2bfe-11e5-9348-0e0c41326911/viz.json'); 
@@ -647,6 +584,14 @@ var other_religion = cartodb.createLayer(map_object, {  // religion type
           var l_nails = new L.LayerGroup();
           nails.addTo(l_nails);
 
+  var cbori = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/4a36bc10-1444-11e5-84c6-0e853d047bba/viz.json'); 
+          var l_cbori = new L.LayerGroup();
+          cbori.addTo(l_cbori);
+
+  var subways = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/77a3e3a4-2aaf-11e5-8077-0e9d821ea90d/viz.json'); 
+          var l_subways = new L.LayerGroup();
+          subways.addTo(l_subways);
+
 
   var vision_zero = cartodb.createLayer(map_object, 'https://ashron24.cartodb.com/api/v2/viz/5f2fe1a8-2f12-11e5-8b7e-0e0c41326911/viz.json'); 
           var l_vision_zero = new L.LayerGroup();
@@ -656,19 +601,25 @@ var other_religion = cartodb.createLayer(map_object, {  // religion type
           var l_id_ny = new L.LayerGroup();
           id_ny.addTo(l_id_ny);
 
-var scrie = cartodb.createLayer(map_object, 'https://ashron24.cartodb.com/api/v2/viz/765c7704-2bfe-11e5-99c0-0e018d66dc29/viz.json'); 
-          var l_scrie = new L.LayerGroup();
-          scrie.addTo(l_scrie);
 
 var cau_events = cartodb.createLayer(map_object, 'https://ashron2224.cartodb.com/api/v2/viz/8bcbcfa4-354a-11e5-9b8e-0e4fddd5de28/viz.json'); 
           var l_cau_events = new L.LayerGroup();
           cau_events.addTo(l_cau_events);
 
-var paid_sick = cartodb.createLayer(map_object, 'https://ashron24.cartodb.com/api/v2/viz/b985e2b8-1911-11e5-bd0e-0e853d047bba/viz.json'); 
-          var l_paid_sick = new L.LayerGroup();
-          paid_sick.addTo(l_paid_sick);
+  
+  var nonengspan = cartodb.createLayer(map_object, {
+            user_name: 'andrewmartini',
+            type: 'cartodb',
+            sublayers: [{
+               sql: 'select * from schlang_merge_05_04',
+               cartocss: "#layer {  polygon-opacity: 0.7;  line-color: #FFF;  line-width: 1;  line-opacity: 1;  }   /** language group polygon fill */  #schlang_merge_05_04[_plurnes_gr='Sino-Tibetan: Chinese'] {  polygon-fill: #ff0000;  }  #schlang_merge_05_04[_plurnes_gr='South Asian'] {  polygon-fill: #ffa500;  }  #schlang_merge_05_04[_plurnes_gr='E & SE Asia: other'] {  polygon-fill: #fb9a99;  }  #schlang_merge_05_04[_plurnes_gr='Austronesian: Malayo-Polynesian'] {  polygon-fill: #fb9a99;  } #schlang_merge_05_04[_plurnes_gr='Afro-Asiatic: Semitic'] {  polygon-fill: #49db40;  }  #schlang_merge_05_04[_plurnes_gr='Niger-Congo: Atlantic-Congo'] {  polygon-fill: #136400;  }  #schlang_merge_05_04[_plurnes_gr='Niger-Congo: Mande'] {  polygon-fill: #229A00;  }   #schlang_merge_05_04[_plurnes_gr='French Creoles'] {  polygon-fill: #A53ED5;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Balto-Slavic'] {  polygon-fill: #0000a0;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Romance'] {  polygon-fill: #5CA2D1;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Germanic'] {  polygon-fill: #5CA2D1;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Other'] {  polygon-fill: #00ceff;   }  #schlang_merge_05_04[_plurnes_gr='Uralic'] {  polygon-fill: #00ceff;  }   #schlang_merge_05_04 {  polygon-fill: #DDDDDD;  }   /** language labels for plurnes */  #schlang_merge_05_04::labels [zoom >= 12] { text-name: [_plurnes]; text-face-name: 'Lato Bold'; text-size: 10; text-wrap-before: true; text-wrap-width: 20;  text-transform: capitalize; text-label-position-tolerance: 10; text-fill: #000; text-halo-fill: #FFF; text-halo-radius: 1; text-dy: 0; text-allow-overlap: false; text-placement: point; text-placement-type: simple;  }   #schlang_merge_05_04::labels [zoom >= 13]      { text-name: [_plurnes]+' '+[_plurnes_qt]; text-face-name: 'Lato Bold'; text-size: 11;  }   #schlang_merge_05_04::labels [zoom >= 14]  { text-name: [_plurnes]+' '+[_plurnes_qt]; text-face-name: 'Lato Bold'; text-size: 13;  } #schlang_poly_v3_1::labels [_plurnes_qt < 9]{   text-name: [_plurnes_qt];   text-face-name: 'Lato Bold';   text-size: 0;   text-fill: #fff;   text-halo-radius: 0; }",
+               interactivity: 'cartodb_id'}]
+          });
+         var l_nonengspan = new L.LayerGroup();
+         nonengspan.addTo(l_nonengspan);
 
-var nycha = cartodb.createLayer(map_object, {
+
+    var nycha = cartodb.createLayer(map_object, {
             user_name: 'andrewmartini',
             type: 'cartodb',
             sublayers: [{
@@ -679,198 +630,28 @@ var nycha = cartodb.createLayer(map_object, {
          var l_nycha = new L.LayerGroup();
          nycha.addTo(l_nycha);
 
-  var subways = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/77a3e3a4-2aaf-11e5-8077-0e9d821ea90d/viz.json'); 
-          var l_subways = new L.LayerGroup();
-          subways.addTo(l_subways);
 
-  var dpr_parks = cartodb.createLayer(map_object, 'https://andrewmartini.cartodb.com/api/v2/viz/14265a74-4129-11e5-a71a-0e4fddd5de28/viz.json'); 
-          var l_dpr_parks = new L.LayerGroup();
-          dpr_parks.addTo(l_dpr_parks); 
-
-
-    var cau_outreach_targets = {
-        "CAU events by Neigh": l_cau_events,
-        "SCRIE Outreach": l_scrie,
-        "Rent Regulated Target": l_rentreg,
-        "ID NY Target Locations": l_id_ny,
-        "Paid Sick Leave": l_paid_sick,
+    var caugroup = {
+        "<span class='my-layer-item-bold'>CBOs & Religious orgs</span>": l_cbori,
         "Nail Salon // Action": l_nails,
         "Vision Zero": l_vision_zero,
         "NYCHA developments": l_nycha,
         "Subway Lines": l_subways,
-        "Parks Properties": l_dpr_parks
+        "DOE: Non-English, -Span": l_nonengspan,
+        "Rent Regulated Target": l_rentreg,
+        "CAU events by Neigh": l_cau_events,
+        "ID NY Target Locations": l_id_ny
+
     };
 
-     L.control.layers(null, cau_outreach_targets, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
+     L.control.layers(null, caugroup, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
+     //.setZIndex(600);
+   // L.Control.CategorizedLayers(null, overlayLayers, {collapsed: false, position:'topright'}).addTo(map_object);
 
-//******************************************************
-// GROUP 4 DEMOGRAPHICS & OTHER
-
-var lang_plurality = cartodb.createLayer(map_object, {
-            user_name: 'andrewmartini',
-            type: 'cartodb',
-            sublayers: [{
-               sql: 'select * from schlang_merge_05_04',
-               cartocss:  "#schlang_merge_05_04 {    polygon-opacity: 1;    line-color: #FFF;    line-width: 1;    line-opacity: 0.5; }  #schlang_merge_05_04[_plura_grp='French Creoles'] {    polygon-fill: #A53ED5; } #schlang_merge_05_04[_plura_grp='Indo-European: Balto-Slavic'] {    polygon-fill: #0000a0; } #schlang_merge_05_04[_plura_grp='Indo-European: Romance'] {    polygon-fill: #5CA2D1; } #schlang_merge_05_04[_plura_grp='Indo-European: Germanic'] {    polygon-fill: #cccccc; } #schlang_merge_05_04[_plura_grp='Indo-European: Other'] {    polygon-fill: #00ceff;   } #schlang_merge_05_04[_plura_grp='Uralic'] {    polygon-fill: #00ceff; }  #schlang_merge_05_04[_plura_grp='Sino-Tibetan: Chinese'] {    polygon-fill: #ff0000; } #schlang_merge_05_04[_plura_grp='South Asian'] {    polygon-fill: #ffa500; } #schlang_merge_05_04[_plura_grp='E & SE Asia: other'] {    polygon-fill: #fb9a99; } #schlang_merge_05_04[_plura_grp='Austronesian: Malayo-Polynesian'] {    polygon-fill: #fb9a99; }  #schlang_merge_05_04[_plura_grp='Afro-Asiatic: Semitic'] {    polygon-fill: #49db40; } #schlang_merge_05_04[_plura_grp='Niger-Congo: Atlantic-Congo'] {    polygon-fill: #136400; } #schlang_merge_05_04[_plura_grp='Niger-Congo: Mande'] {    polygon-fill: #229A00; }  #schlang_merge_05_04 {    polygon-fill: #DDDDDD; }     /** language labels for _plura */ #schlang_merge_05_04::labels [zoom >= 12] {   text-name: [_plura];   text-face-name: 'Lato Bold';   text-size: 10;   text-wrap-before: true;   text-wrap-width: 20;   text-label-position-tolerance: 10;   text-fill: #000;   text-halo-fill: #FFF;   text-halo-radius: 1;   text-dy: 0;   text-allow-overlap: false;   text-placement: point;   text-placement-type: simple; }  #schlang_merge_05_04::labels [zoom >= 13]  {   text-name: [_plura]+' '+[_plura_qt];   text-face-name: 'Lato Bold';   text-size: 11; }  #schlang_merge_05_04::labels [zoom >= 14] {   text-name: [_plura]+' '+[_plura_qt];   text-face-name: 'Lato Bold';   text-size: 13; }",
-               interactivity: 'cartodb_id'}]
-          });
-         var l_lang_plurality = new L.LayerGroup();
-         lang_plurality.addTo(l_lang_plurality);
-
- var plur_non_eng = cartodb.createLayer(map_object, {
-            user_name: 'andrewmartini',
-            type: 'cartodb',
-            sublayers: [{
-               sql: 'select * from schlang_merge_05_04',
-               cartocss: "#layer {     polygon-opacity: 1;     line-color: #FFF;     line-width: 0.5;     line-opacity: 1;  }   #layer[_plurne_grp='French Creoles'] {     polygon-fill: #A53ED5;  }  #layer[_plurne_grp='Indo-European: Balto-Slavic']  {     polygon-fill: #0000a0;  }  #layer[_plurne_grp='Indo-European: Romance']  {     polygon-fill: #5CA2D1;  }  #layer[_plurne_grp='Indo-European: Germanic']  {     polygon-fill: #cccccc;  }  #layer[_plurne_grp='Indo-European: Other']  {      polygon-fill: #00ceff;    }  #layer[_plurne_grp='Uralic']  {     polygon-fill: #00ceff;  }   #layer[_plurne_grp='Sino-Tibetan: Chinese']  {     polygon-fill: #ff0000;  }  #layer[_plurne_grp='South Asian']  {     polygon-fill: #ffa500;  }  #layer[_plurne_grp='E & SE Asia: other'] {     polygon-fill: #fb9a99;  }  #layer[_plurne_grp='Austronesian: Malayo-Polynesian']  {     polygon-fill: #fb9a99;  }   #layer[_plurne_grp='Afro-Asiatic: Semitic']  {     polygon-fill: #49db40;  }  #layer[_plurne_grp='Niger-Congo: Atlantic-Congo'] {     polygon-fill: #136400;  }  #layer[_plurne_grp='Niger-Congo: Mande'] {     polygon-fill: #229A00;  }   #layer {     polygon-fill: #DDDDDD;  }      /** language labels for _plurne */  #layer::labels [zoom >= 12] {    text-name: [_plurne];    text-face-name: 'Lato Bold';    text-size: 10;    text-wrap-before: true;    text-wrap-width: 20;    text-label-position-tolerance: 10;    text-fill: #000;    text-halo-fill: #FFF;    text-halo-radius: 1;    text-dy: 0;    text-allow-overlap: false;    text-placement: point;    text-placement-type: simple;  }   #layer::labels [zoom >= 13] {    text-name: [_plurne]+' '+[_plurne_qty];    text-face-name: 'Lato Bold';    text-size: 11;  }   #layer::labels [zoom >= 14] {    text-name: [_plurne]+' '+[_plurne_qty];    text-face-name: 'Lato Bold';    text-size: 13;  }  #schlang_poly_v3_1::labels [_plurne_qty <= 9]{    text-name: [_plurne];    text-face-name: 'Lato Bold';    text-size: 0;    text-fill: #fff;    text-halo-radius: 0;  }  ",
-               interactivity: 'cartodb_id'}]
-          });
-         var l_plur_non_eng = new L.LayerGroup();
-         plur_non_eng.addTo(l_plur_non_eng);         
-
-  var nonengspan = cartodb.createLayer(map_object, {
-            user_name: 'andrewmartini',
-            type: 'cartodb',
-            sublayers: [{
-               sql: 'select * from schlang_merge_05_04',
-               cartocss: "#layer {  polygon-opacity: 1;  line-color: #FFF;  line-width: 0.5;  line-opacity: 1;  }   /** language group polygon fill */  #schlang_merge_05_04[_plurnes_gr='Sino-Tibetan: Chinese'] {  polygon-fill: #ff0000;  }  #schlang_merge_05_04[_plurnes_gr='South Asian'] {  polygon-fill: #ffa500;  }  #schlang_merge_05_04[_plurnes_gr='E & SE Asia: other'] {  polygon-fill: #fb9a99;  }  #schlang_merge_05_04[_plurnes_gr='Austronesian: Malayo-Polynesian'] {  polygon-fill: #fb9a99;  } #schlang_merge_05_04[_plurnes_gr='Afro-Asiatic: Semitic'] {  polygon-fill: #49db40;  }  #schlang_merge_05_04[_plurnes_gr='Niger-Congo: Atlantic-Congo'] {  polygon-fill: #136400;  }  #schlang_merge_05_04[_plurnes_gr='Niger-Congo: Mande'] {  polygon-fill: #229A00;  }   #schlang_merge_05_04[_plurnes_gr='French Creoles'] {  polygon-fill: #A53ED5;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Balto-Slavic'] {  polygon-fill: #0000a0;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Romance'] {  polygon-fill: #5CA2D1;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Germanic'] {  polygon-fill: #5CA2D1;  }  #schlang_merge_05_04[_plurnes_gr='Indo-European: Other'] {  polygon-fill: #00ceff;   }  #schlang_merge_05_04[_plurnes_gr='Uralic'] {  polygon-fill: #00ceff;  }   #schlang_merge_05_04 {  polygon-fill: #DDDDDD;  }   /** language labels for plurnes */  #schlang_merge_05_04::labels [zoom >= 12] { text-name: [_plurnes]; text-face-name: 'Lato Bold'; text-size: 10; text-wrap-before: true; text-wrap-width: 20;  text-transform: capitalize; text-label-position-tolerance: 10; text-fill: #000; text-halo-fill: #FFF; text-halo-radius: 1; text-dy: 0; text-allow-overlap: false; text-placement: point; text-placement-type: simple;  }   #schlang_merge_05_04::labels [zoom >= 13]      { text-name: [_plurnes]+' '+[_plurnes_qt]; text-face-name: 'Lato Bold'; text-size: 11;  }   #schlang_merge_05_04::labels [zoom >= 14]  { text-name: [_plurnes]+' '+[_plurnes_qt]; text-face-name: 'Lato Bold'; text-size: 13;  } #schlang_poly_v3_1::labels [_plurnes_qt < 9]{   text-name: [_plurnes_qt];   text-face-name: 'Lato Bold';   text-size: 0;   text-fill: #fff;   text-halo-radius: 0; }",
-               interactivity: 'cartodb_id'}]
-          });
-         var l_nonengspan = new L.LayerGroup();
-         nonengspan.addTo(l_nonengspan);
-
-var percent_nhblack_choro = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT cartodb_id, the_geom_webmercator, (nhblack/totalpop)*100 as percent_black FROM tracttemp where totalpop > 100",
-                        cartocss: "#tracttemp{   polygon-fill: #ffffb2;   polygon-opacity: 1;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ percent_black <= 100] {    polygon-fill: #B10026; } #tracttemp [ percent_black <= 90] {    polygon-fill: #E31A1C; } #tracttemp [ percent_black <= 65] {    polygon-fill: #FC4E2A; } #tracttemp [ percent_black <= 50] {    polygon-fill: #FD8D3C; } #tracttemp [ percent_black <= 35] {    polygon-fill: #FEB24C; } #tracttemp [ percent_black <= 20] {    polygon-fill: #FED976; } #tracttemp [ percent_black <= 10] {    polygon-fill: #FFFFB2; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_percent_nhblack_choro = new L.LayerGroup();
-    percent_nhblack_choro.addTo(l_percent_nhblack_choro); 
-
-var percent_nhwhite_choro = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT cartodb_id, the_geom_webmercator, (nhwhite/totalpop)*100 as percent_white FROM tracttemp where totalpop > 100",
-                        cartocss: "#tracttemp{   polygon-fill: #ffffb2;   polygon-opacity: 1.0;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ percent_white <= 100] {    polygon-fill: #B10026; } #tracttemp [ percent_white <= 90] {    polygon-fill: #E31A1C; } #tracttemp [ percent_white <= 65] {    polygon-fill: #FC4E2A; } #tracttemp [ percent_white <= 50] {    polygon-fill: #FD8D3C; } #tracttemp [ percent_white <= 35] {    polygon-fill: #FEB24C; } #tracttemp [ percent_white <= 20] {    polygon-fill: #FED976; } #tracttemp [ percent_white <= 10] {    polygon-fill: #FFFFB2; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_percent_nhwhite_choro = new L.LayerGroup();
-    percent_nhwhite_choro.addTo(l_percent_nhwhite_choro); 
-
-var percent_foreignborn_choro = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT cartodb_id, the_geom_webmercator, (foreignbor/totalpop)*100 AS percent_fb FROM tracttemp where totalpop > 100",
-                        cartocss: "#tracttemp{   polygon-fill: #ffffb2;   polygon-opacity: 1;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ percent_fb <= 100] {    polygon-fill: #B10026; } #tracttemp [ percent_fb <= 90] {    polygon-fill: #E31A1C; } #tracttemp [ percent_fb <= 65] {    polygon-fill: #FC4E2A; } #tracttemp [ percent_fb <= 50] {    polygon-fill: #FD8D3C; } #tracttemp [ percent_fb <= 35] {    polygon-fill: #FEB24C; } #tracttemp [ percent_fb <= 20] {    polygon-fill: #FED976; } #tracttemp [ percent_fb <= 10] {    polygon-fill: #FFFFB2; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_percent_foreignborn_choro = new L.LayerGroup();
-    percent_foreignborn_choro.addTo(l_percent_foreignborn_choro); 
-
-var percent_nhasian_choro = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT cartodb_id, the_geom_webmercator, (nhasian/totalpop)*100 as percent_asian FROM tracttemp where totalpop > 100",
-                        cartocss: "#tracttemp{   polygon-fill: #ffffb2;   polygon-opacity: 1;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ percent_asian <= 100] {    polygon-fill: #B10026; } #tracttemp [ percent_asian <= 90] {    polygon-fill: #E31A1C; } #tracttemp [ percent_asian <= 65] {    polygon-fill: #FC4E2A; } #tracttemp [ percent_asian <= 50] {    polygon-fill: #FD8D3C; } #tracttemp [ percent_asian <= 35] {    polygon-fill: #FEB24C; } #tracttemp [ percent_asian <= 20] {    polygon-fill: #FED976; } #tracttemp [ percent_asian <= 10] {    polygon-fill: #FFFFB2; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_percent_nhasian_choro = new L.LayerGroup();
-    percent_nhasian_choro.addTo(l_percent_nhasian_choro); 
-
-var percent_hispanic_choro = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT cartodb_id, the_geom_webmercator, (hispanic/totalpop)*100 as percent_asian FROM tracttemp where totalpop > 100",
-                        cartocss: "#tracttemp{   polygon-fill: #ffffb2;   polygon-opacity: 1;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ percent_asian <= 100] {    polygon-fill: #B10026; } #tracttemp [ percent_asian <= 90] {    polygon-fill: #E31A1C; } #tracttemp [ percent_asian <= 65] {    polygon-fill: #FC4E2A; } #tracttemp [ percent_asian <= 50] {    polygon-fill: #FD8D3C; } #tracttemp [ percent_asian <= 35] {    polygon-fill: #FEB24C; } #tracttemp [ percent_asian <= 20] {    polygon-fill: #FED976; } #tracttemp [ percent_asian <= 10] {    polygon-fill: #FFFFB2; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_percent_hispanic_choro = new L.LayerGroup();
-    percent_hispanic_choro.addTo(l_percent_hispanic_choro); 
-
-var median_inc_to_rent = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT * FROM tracttemp WHERE Totalpop > 250",
-                        cartocss: "#tracttemp{   polygon-fill: #EDF8FB;   polygon-opacity: 1;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ medrenttoh <= 50] {    polygon-fill: #005824; } #tracttemp [ medrenttoh <= 44.65] {    polygon-fill: #238B45; } #tracttemp [ medrenttoh <= 40.15] {    polygon-fill: #41AE76; } #tracttemp [ medrenttoh <= 35.65] {    polygon-fill: #66C2A4; } #tracttemp [ medrenttoh <= 31.15] {    polygon-fill: #CCECE6; } #tracttemp [ medrenttoh <= 26.65] {    polygon-fill: #D7FAF4; } #tracttemp [ medrenttoh <= 22.15] {    polygon-fill: #EDF8FB; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_median_inc_to_rent = new L.LayerGroup();
-    median_inc_to_rent.addTo(l_median_inc_to_rent); 
-
-var median_inc_choro = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT cartodb_id, the_geom_webmercator, medianhhin FROM tracttemp WHERE Totalpop > 250",
-                        cartocss: " #tracttemp{   polygon-fill: #1a9850;   polygon-opacity: 1;   line-color: #FFF;   line-width: 0.1;   line-opacity: 1; } #tracttemp [ medianhhin <= 243622] {    polygon-fill: #d73027; } #tracttemp [ medianhhin <= 84240] {    polygon-fill: #f79272; } #tracttemp [ medianhhin <= 67394] {    polygon-fill: #fed6b0; } #tracttemp [ medianhhin <= 57176] {    polygon-fill: #fff2cc; } #tracttemp [ medianhhin <= 48159] {    polygon-fill: #d2ecb4; } #tracttemp [ medianhhin <= 39538] {    polygon-fill: #8cce8a; } #tracttemp [ medianhhin <= 30106] {    polygon-fill: #1a9850; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_median_inc_choro  = new L.LayerGroup();
-    median_inc_choro.addTo(l_median_inc_choro); 
-
-var bangladesh_gradu = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT the_geom, the_geom_webmercator, cartodb_id, bangladesh FROM tracttemp WHERE bangladesh > 5",
-                        cartocss:  "#layer {   marker-fill-opacity: 0.8;   marker-line-color: #FFBE34;   marker-line-width: 1.5;   marker-line-opacity: 1;   marker-placement: point;   marker-multi-policy: largest;   marker-type: ellipse;   marker-fill: #FFBE34;   marker-allow-overlap: true;   marker-clip: false; } #layer [ bangladesh <= 1600] {    marker-width: 32.0; } #layer [ bangladesh <= 1000] {    marker-width: 24.0; } #layer [ bangladesh <= 500] {    marker-width: 18; } #layer [ bangladesh <= 100] {    marker-width: 12; } #layer [ bangladesh <= 50] {    marker-width: 8; } #layer [ bangladesh <= 10] {   marker-width: 2.0; } ",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_bangladesh_gradu  = new L.LayerGroup();
-    bangladesh_gradu.addTo(l_bangladesh_gradu); 
-
-
-var pakistani_gradu = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT the_geom, the_geom_webmercator, cartodb_id, pakistani FROM tracttemp WHERE pakistani > 5",
-                        cartocss: " #tracttemp{   marker-fill-opacity: 0.8;   marker-line-color: #B8905F;   marker-line-width: 1.5;   marker-line-opacity: 1;   marker-placement: point;   marker-multi-policy: largest;   marker-type: ellipse;   marker-fill: #B8905F;   marker-allow-overlap: true;   marker-clip: false; } #tracttemp [ pakistani <= 1600] {    marker-width: 32.0; } #tracttemp [ pakistani <= 1000] {    marker-width: 24.0; } #tracttemp [ pakistani <= 500] {    marker-width: 18; } #tracttemp [ pakistani <= 100] {    marker-width: 12; } #tracttemp [ pakistani <= 50] {    marker-width: 8; } #tracttemp [ pakistani <= 10] {    marker-width: 2.0; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_pakistani_gradu  = new L.LayerGroup();
-    pakistani_gradu.addTo(l_pakistani_gradu); 
-
-var arab_gradu = cartodb.createLayer(map_object, {   
-                      user_name: 'andrewmartini',
-                      type: 'cartodb',
-                      sublayers: [{
-                        sql: "SELECT the_geom, the_geom_webmercator, cartodb_id, arab FROM tracttemp WHERE arab > 5",
-                        cartocss: "#tracttemp{   marker-fill-opacity: 0.8;   marker-line-color: #6EBC88;   marker-line-width: 1.5;   marker-line-opacity: 1;   marker-placement: point;   marker-multi-policy: largest;   marker-type: ellipse;   marker-fill: #6EBC88;   marker-allow-overlap: true;   marker-clip: false; } #tracttemp [ arab <= 1600] {    marker-width: 32.0; } #tracttemp [ arab <= 1000] {    marker-width: 24.0; } #tracttemp [ arab <= 500] {    marker-width: 18; } #tracttemp [ arab <= 100] {    marker-width: 12; } #tracttemp [ arab <= 50] {    marker-width: 8; } #tracttemp [ arab <= 10] {    marker-width: 2.0; }",
-                      interactivity: "cartodb_id"}]
-                    });
-    var l_arab_gradu = new L.LayerGroup();
-    arab_gradu.addTo(l_arab_gradu); 
-
-
-
- var demographic = {
-
-        "Percent Hispanic": l_percent_hispanic_choro,
-        "Percent NH White": l_percent_nhwhite_choro,
-        "Percent NH Black": l_percent_nhblack_choro,       
-        "Percent NH Asian": l_percent_nhasian_choro,
-        "Median HH Income": l_median_inc_choro,
-        "Median Inc to Rent": l_median_inc_to_rent,
-        "DOE: Lang Plurality": l_lang_plurality,
-        "DOE: Non-Engl Plur": l_plur_non_eng,
-        "DOE: Non-Engl/Span": l_nonengspan,        
-        "Prcnt Foreign Born": l_percent_foreignborn_choro,
-        "Bangladeshi": l_bangladesh_gradu,
-        "Pakistani": l_pakistani_gradu,
-        "Arab": l_arab_gradu
-    };
-  L.control.layers(null, demographic, {collapsed: false, position:'topright', autoZIndex: false}).addTo(map_object);
 
             }
+
+
 
         </script>
     </body>
